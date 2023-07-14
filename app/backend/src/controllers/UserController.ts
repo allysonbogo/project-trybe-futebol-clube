@@ -27,12 +27,14 @@ export default class UserController {
   }
 
   public async getByEmail(req: Request, res: Response) {
-    const serviceResponse = await this.userService.getByEmail(req.body);
+    const { email, password } = req.body;
+
+    const serviceResponse = await this.userService.getByEmail(email, password);
 
     if (serviceResponse.status !== 'SUCCESSFUL') {
       return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
     }
 
-    res.status(200).json({ token: this.jwt.createToken(req.body.email) });
+    res.status(200).json({ token: this.jwt.createToken(email) });
   }
 }
