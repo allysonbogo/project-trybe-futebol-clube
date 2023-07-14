@@ -12,8 +12,8 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('/teams', () => {
-  afterEach(() => {
+describe('/teams', function() {
+  afterEach(function() {
     sinon.restore();
   })
 
@@ -33,5 +33,14 @@ describe('/teams', () => {
 
     expect(status).to.equal(200);
     expect(body).to.deep.equal(team);
+  });
+
+  it('should return an error when passing a non-existent id', async function() {
+    sinon.stub(SequelizeTeam, 'findOne').resolves(null);
+
+    const { status, body } = await chai.request(app).get('/teams/999');
+
+    expect(status).to.equal(404);
+    expect(body).to.deep.equal({ message: 'Team 999 not found' });
   });
 });
