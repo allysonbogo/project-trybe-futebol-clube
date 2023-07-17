@@ -5,7 +5,6 @@ import JWT from '../utils/JWT';
 
 export default class UserController {
   constructor(
-    private jwt = new JWT(),
     private userService = new UserService(),
   ) { }
 
@@ -35,6 +34,21 @@ export default class UserController {
       return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
     }
 
-    res.status(200).json({ token: this.jwt.createToken(email) });
+    res.status(200).json({ token: JWT.createToken(email) });
+  }
+
+  public async returnRole(req: Request, res: Response) {
+    const { authorization } = req.headers;
+    if (!authorization) { return res.status(200).json({ message: 'Token not found' }); }
+    const token = authorization.split(' ')[1];
+    const email = JWT.decodeToken(token) as string;
+
+    const serviceResponse = await this.userService.returnRole(email);
+
+    if (serviceResponse.status !== 'SUCCESSFUL') {
+      return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
+    }
+
+    res.status(200).json({ role: serviceResponse.data.role });
   }
 }

@@ -2,13 +2,17 @@ import * as jwt from 'jsonwebtoken';
 import { Token } from '../Interfaces';
 
 export default class JWT {
-  private jwtSecret = process.env.JWT_SECRET || 'ash-ketchum';
+  private static jwtSecret = process.env.JWT_SECRET || 'ash-ketchum';
 
-  createToken(payload: Token): string {
-    return jwt.sign(payload, this.jwtSecret);
+  static createToken(payload: Token): string {
+    return jwt.sign(payload, JWT.jwtSecret);
   }
 
-  decodeToken(token: string) {
-    return jwt.verify(token, this.jwtSecret);
+  static verifyToken(token: string) {
+    return jwt.verify(token, JWT.jwtSecret);
+  }
+
+  static decodeToken(token: string) {
+    return jwt.decode(token);
   }
 }

@@ -21,16 +21,18 @@ export default class UserService {
   }
 
   public async getByEmail(email: string, password: string): Promise<ServiceResponse<IUser>> {
-    if (!email || !password) {
-      return { status: 'INVALID_DATA', data: { message: 'All fields must be filled' } };
-    }
-
     const user = await this.userModel.findByEmail(email);
-
     if (!user || !bcrypt.compareSync(password, user.password)) {
       return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
+    return { status: 'SUCCESSFUL', data: user };
+  }
 
+  public async returnRole(email: string): Promise<ServiceResponse<IUser>> {
+    const user = await this.userModel.findByEmail(email);
+    if (!user) {
+      return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
+    }
     return { status: 'SUCCESSFUL', data: user };
   }
 }
