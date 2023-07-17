@@ -30,9 +30,7 @@ class Validations {
     const token = authorization.split(' ')[1];
 
     try {
-      const decoded = JWT.verifyToken(token);
-      if (!decoded) throw new Error('Token must be a valid token');
-
+      JWT.verifyToken(token);
       next();
     } catch (e) {
       return res.status(401).json({ message: 'Token must be a valid token' });

@@ -2,6 +2,7 @@ import * as bcrypt from 'bcryptjs';
 
 const validPassword = 'secret_password';
 const validEmail = 'allyson@admin.com';
+const invalidEmail = 'allyson';
 
 const SALT_ROUNDS = process.env.BCRYPT_SALT_ROUNDS || 10;
 
@@ -20,7 +21,12 @@ const validLoginBody = {
   password: validPassword,
 };
 
-const invalidLoginBody = {
+const invalidEmailLoginBody = {
+  email: invalidEmail,
+  password: validPassword,
+};
+
+const invalidPswdLoginBody = {
   email: validEmail,
   password: 'wrong_password',
 };
@@ -29,5 +35,6 @@ export {
   user,
   users,
   validLoginBody,
-  invalidLoginBody,
+  invalidEmailLoginBody,
+  invalidPswdLoginBody,
 };

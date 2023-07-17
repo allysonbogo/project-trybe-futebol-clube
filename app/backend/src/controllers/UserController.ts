@@ -38,10 +38,10 @@ export default class UserController {
   }
 
   public async returnRole(req: Request, res: Response) {
-    const { authorization } = req.headers;
-    if (!authorization) { return res.status(200).json({ message: 'Token not found' }); }
+    const { authorization } = req.headers as { authorization: string };
+
     const token = authorization.split(' ')[1];
-    const email = JWT.decodeToken(token) as string;
+    const email = JWT.verifyToken(token) as string;
 
     const serviceResponse = await this.userService.returnRole(email);
 
