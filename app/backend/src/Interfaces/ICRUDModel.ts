@@ -9,6 +9,12 @@ export interface ICRUDModelReader<T> {
   findById(id: ID): Promise<T | null>,
 }
 
+export interface ICRUDMatchReader<T> {
+  findAll(): Promise<T[]>,
+  findInProgress(inProgress: boolean): Promise<T[]>,
+  findById(id: ID): Promise<T | null>,
+}
+
 export interface ICRUDModelEmail<T> extends ICRUDModelReader<T> {
   findByEmail(email: string): Promise<T | null>,
 }
