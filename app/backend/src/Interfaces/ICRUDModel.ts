@@ -9,10 +9,8 @@ export interface ICRUDModelReader<T> {
   findById(id: ID): Promise<T | null>,
 }
 
-export interface ICRUDMatchReader<T> {
-  findAll(): Promise<T[]>,
+export interface ICRUDModelInProgress<T> {
   findInProgress(inProgress: boolean): Promise<T[]>,
-  findById(id: ID): Promise<T | null>,
 }
 
 export interface ICRUDModelEmail<T> extends ICRUDModelReader<T> {
@@ -20,7 +18,8 @@ export interface ICRUDModelEmail<T> extends ICRUDModelReader<T> {
 }
 
 export interface ICRUDModelUpdater<T> {
-  update(id: ID, data: Partial<T>): Promise<T | null>,
+  finish(id: ID): Promise<T | null>,
+  update(id: ID, homeTeamGoals: ID, awayTeamGoals: ID): Promise<T | null>,
 }
 
 export interface ICRUDModelDeleter {
@@ -28,5 +27,4 @@ export interface ICRUDModelDeleter {
 }
 
 export interface ICRUDModel<T>
-  extends ICRUDModelCreator<T>, ICRUDModelReader<T>, ICRUDModelUpdater<T>,
-  ICRUDModelDeleter { }
+  extends ICRUDModelReader<T>, ICRUDModelInProgress<T>, ICRUDModelUpdater<T> { }

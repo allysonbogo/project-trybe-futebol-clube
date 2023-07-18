@@ -12,12 +12,12 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('/login', function() {
-  afterEach(function() {
+describe('/login', function () {
+  afterEach(function () {
     sinon.restore();
   })
 
-  it('should return all users', async function() {
+  it('should return all users', async function () {
     sinon.stub(SequelizeUser, 'findAll').resolves(users as any);
 
     const { status, body } = await chai.request(app).get('/login');
@@ -26,7 +26,7 @@ describe('/login', function() {
     expect(body).to.deep.equal(users);
   });
 
-  it('should return a user by id', async function() {
+  it('should return a user by id', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(user as any);
 
     const { status, body } = await chai.request(app).get('/login/1');
@@ -35,7 +35,7 @@ describe('/login', function() {
     expect(body).to.deep.equal(user);
   });
 
-  it('should return an error when passing a non-existent id', async function() {
+  it('should return an error when passing a non-existent id', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(null);
 
     const { status, body } = await chai.request(app).get('/login/999');
@@ -53,7 +53,7 @@ describe('/login', function() {
     expect(body).to.have.key('token');
   });
 
-  it('should return an error when passing a non-existent email', async function() {
+  it('should return an error when passing a non-existent email', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(null);
 
     const { status, body } = await chai.request(app).post('/login').send(invalidEmailLoginBody);
@@ -62,7 +62,7 @@ describe('/login', function() {
     expect(body).to.deep.equal({ message: 'Invalid email or password' });
   });
 
-  it('should return an error when passing an invalid email', async function() {
+  it('should return an error when passing an invalid email', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(user as any);
 
     const { status, body } = await chai.request(app).post('/login').send(invalidEmailLoginBody);
@@ -71,7 +71,7 @@ describe('/login', function() {
     expect(body).to.deep.equal({ message: 'Invalid email or password' });
   });
 
-  it('should return an error when passing a wrong password', async function() {
+  it('should return an error when passing a wrong password', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(user as any);
 
     const { status, body } = await chai.request(app).post('/login').send(invalidPswdLoginBody);
@@ -80,7 +80,7 @@ describe('/login', function() {
     expect(body).to.deep.equal({ message: 'Invalid email or password' });
   });
 
-  it('should return an error when not passing an email or password', async function() {
+  it('should return an error when not passing an email or password', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(user as any);
 
     const { status, body } = await chai.request(app).post('/login').send({});
@@ -89,24 +89,24 @@ describe('/login', function() {
     expect(body).to.deep.equal({ message: 'All fields must be filled' });
   });
 
-  it('should return user role', async function() {
+  it('should return user role', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(user as any);
 
-    const tokenResponse = await chai.request(app).post('/login').send(validLoginBody);
+    const { body: { token } } = await chai.request(app).post('/login').send(validLoginBody);
 
     const { status, body } = await chai
       .request(app)
       .get('/login/role')
-      .set('Authorization', 'Bearer ' + tokenResponse.body.token);
+      .set('Authorization', 'Bearer ' + token);
 
     expect(status).to.equal(200);
     expect(body).to.have.key('role');
   });
 
-  it('should return an error when passing a non-existent email', async function() {
+  it('should return an error when passing a non-existent email', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(user as any);
 
-    const tokenResponse = await chai.request(app).post('/login').send(validLoginBody);
+    const { body: { token } } = await chai.request(app).post('/login').send(validLoginBody);
 
     sinon.restore();
     sinon.stub(SequelizeUser, 'findOne').resolves(null);
@@ -114,13 +114,13 @@ describe('/login', function() {
     const { status, body } = await chai
       .request(app)
       .get('/login/role')
-      .set('Authorization', 'Bearer ' + tokenResponse.body.token);
+      .set('Authorization', 'Bearer ' + token);
 
     expect(status).to.equal(401);
     expect(body).to.deep.equal({ message: 'Invalid email or password' });
   });
 
-  it('should return an error when passing a wrong token', async function() {
+  it('should return an error when passing a wrong token', async function () {
     const { status, body } = await chai
       .request(app)
       .get('/login/role')
@@ -130,7 +130,7 @@ describe('/login', function() {
     expect(body).to.deep.equal({ message: 'Token must be a valid token' });
   });
 
-  it('should return an error when not passing a token', async function() {
+  it('should return an error when not passing a token', async function () {
     const { status, body } = await chai
       .request(app)
       .get('/login/role')

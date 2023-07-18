@@ -3,7 +3,7 @@ import { IMatch } from '../Interfaces/Matches/IMatch';
 import { IMatchModel } from '../Interfaces/Matches/IMatchModel';
 import MatchModel from '../models/MatchModel';
 
-export default class UserService {
+export default class MatchService {
   constructor(
     private matchModel: IMatchModel = new MatchModel(),
   ) { }
@@ -20,6 +20,22 @@ export default class UserService {
 
   public async getById(id: number): Promise<ServiceResponse<IMatch>> {
     const match = await this.matchModel.findById(id);
+    if (!match) return { status: 'NOT_FOUND', data: { message: `Match ${id} not found` } };
+    return { status: 'SUCCESSFUL', data: match };
+  }
+
+  public async finish(id: number): Promise<ServiceResponse<IMatch>> {
+    const match = await this.matchModel.finish(id);
+    if (!match) return { status: 'NOT_FOUND', data: { message: `Match ${id} not found` } };
+    return { status: 'SUCCESSFUL', data: match };
+  }
+
+  public async update(
+    id: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<ServiceResponse<IMatch>> {
+    const match = await this.matchModel.update(id, homeTeamGoals, awayTeamGoals);
     if (!match) return { status: 'NOT_FOUND', data: { message: `Match ${id} not found` } };
     return { status: 'SUCCESSFUL', data: match };
   }

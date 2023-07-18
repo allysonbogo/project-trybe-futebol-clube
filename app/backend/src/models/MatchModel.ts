@@ -3,7 +3,7 @@ import SequelizeTeam from '../database/models/TeamModel';
 import { IMatch } from '../Interfaces/Matches/IMatch';
 import { IMatchModel } from '../Interfaces/Matches/IMatchModel';
 
-export default class UserModel implements IMatchModel {
+export default class MatchModel implements IMatchModel {
   private model = SequelizeMatch;
 
   async findAll(): Promise<IMatch[]> {
@@ -17,7 +17,7 @@ export default class UserModel implements IMatchModel {
     return dbData;
   }
 
-  async findInProgress(inProgress: boolean): Promise<IMatch[]> {
+  async findInProgress(inProgress: IMatch['inProgress']): Promise<IMatch[]> {
     const dbData = await this.model.findAll({
       where: { inProgress },
       attributes: { exclude: ['home_team_id', 'away_team_id'] },
@@ -38,5 +38,29 @@ export default class UserModel implements IMatchModel {
       ],
     });
     return !dbData ? null : dbData;
+  }
+
+  async finish(id: IMatch['id']): Promise<IMatch | null> {
+    await this.model.update({
+      inProgress: false,
+    }, {
+      where: { id },
+    });
+    const dbData = await this.findById(id);
+    return dbData;
+  }
+
+  async update(
+    id: IMatch['id'],
+    homeTeamGoals: IMatch['homeTeamGoals'],
+    awayTeamGoals: IMatch['awayTeamGoals'],
+  ): Promise<IMatch | null> {
+    await this.model.update({
+      homeTeamGoals, awayTeamGoals,
+    }, {
+      where: { id },
+    });
+    const dbData = await this.findById(id);
+    return dbData;
   }
 }
