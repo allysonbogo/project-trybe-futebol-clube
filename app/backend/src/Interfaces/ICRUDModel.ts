@@ -27,4 +27,5 @@ export interface ICRUDModelDeleter {
 }
 
 export interface ICRUDModel<T>
-  extends ICRUDModelReader<T>, ICRUDModelInProgress<T>, ICRUDModelUpdater<T> { }
+  extends ICRUDModelCreator<T>, ICRUDModelReader<T>,
+  ICRUDModelInProgress<T>, ICRUDModelUpdater<T> { }

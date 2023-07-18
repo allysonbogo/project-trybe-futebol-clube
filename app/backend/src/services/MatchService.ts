@@ -39,4 +39,9 @@ export default class MatchService {
     if (!match) return { status: 'NOT_FOUND', data: { message: `Match ${id} not found` } };
     return { status: 'SUCCESSFUL', data: match };
   }
+
+  public async create(data: IMatch): Promise<ServiceResponse<IMatch>> {
+    const match = await this.matchModel.create(data);
+    return { status: 'SUCCESSFUL', data: match };
+  }
 }

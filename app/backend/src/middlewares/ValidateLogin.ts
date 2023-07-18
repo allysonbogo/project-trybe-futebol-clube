@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ILogin } from '../Interfaces/Users/IUser';
-import JWT from '../utils/JWT';
 
-class Validations {
+export default class Validations {
   private static passwordMinLength = 6;
   private static emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -19,23 +18,4 @@ class Validations {
 
     next();
   }
-
-  static validateToken(req: Request, res: Response, next: NextFunction): Response | void {
-    const { authorization } = req.headers;
-
-    if (!authorization) {
-      return res.status(401).json({ message: 'Token not found' });
-    }
-
-    const token = authorization.split(' ')[1];
-
-    try {
-      JWT.verifyToken(token);
-      next();
-    } catch (e) {
-      return res.status(401).json({ message: 'Token must be a valid token' });
-    }
-  }
 }
-
-export default Validations;

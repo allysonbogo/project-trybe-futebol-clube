@@ -1,5 +1,6 @@
 import { Request, Router, Response } from 'express';
-import Validations from '../middlewares/Validations';
+import TokenValidation from '../middlewares/ValidateToken';
+import MatchValidation from '../middlewares/ValidateMatch';
 import MatchController from '../controllers/MatchController';
 
 const matchController = new MatchController();
@@ -12,14 +13,21 @@ router.get('/:id', (req: Request, res: Response) => matchController.getById(req,
 
 router.patch(
   '/:id/finish',
-  Validations.validateToken,
+  TokenValidation.validateToken,
   (req: Request, res: Response) => matchController.finish(req, res),
 );
 
 router.patch(
   '/:id',
-  Validations.validateToken,
+  TokenValidation.validateToken,
   (req: Request, res: Response) => matchController.update(req, res),
+);
+
+router.post(
+  '/',
+  TokenValidation.validateToken,
+  MatchValidation.validateMatch,
+  (req: Request, res: Response) => matchController.create(req, res),
 );
 
 export default router;

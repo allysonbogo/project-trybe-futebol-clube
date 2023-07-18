@@ -63,4 +63,9 @@ export default class MatchModel implements IMatchModel {
     const dbData = await this.findById(id);
     return dbData;
   }
+
+  async create(data: IMatch): Promise<IMatch> {
+    const dbData = await this.model.create({ ...data, inProgress: true });
+    return dbData;
+  }
 }
