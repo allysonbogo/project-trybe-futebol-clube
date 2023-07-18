@@ -14,9 +14,16 @@ const updateMatchBody = {
   awayTeamGoals: 1,
 }
 
-const createMatchBody = {
+const validCreateBody = {
   homeTeamId: 16,
   awayTeamId: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+}
+
+const invalidCreateBody = {
+  homeTeamId: 16,
+  awayTeamId: 16,
   homeTeamGoals: 2,
   awayTeamGoals: 2,
 }
@@ -25,5 +32,6 @@ export {
   match,
   matches,
   updateMatchBody,
-  createMatchBody,
+  validCreateBody,
+  invalidCreateBody,
 };
