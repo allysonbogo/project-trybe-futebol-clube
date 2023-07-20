@@ -1,17 +1,10 @@
 import { IMatch } from '../Interfaces/Matches/IMatch';
 
-export default class LeaderboardUtils {
+export default class AwayLeaderboardUtils {
   static totalPoints(id: number, matches: IMatch[]): number {
     let totalPoints = 0;
-    const teamMatches = matches.filter(
-      (match) => match.homeTeamId === id || match.awayTeamId === id,
-    );
+    const teamMatches = matches.filter((match) => match.awayTeamId === id);
     teamMatches.map((match) => {
-      if (match.homeTeamId === id) {
-        if (match.homeTeamGoals > match.awayTeamGoals) totalPoints += 3;
-        if (match.homeTeamGoals === match.awayTeamGoals) totalPoints += 1;
-        return totalPoints;
-      }
       if (match.awayTeamGoals > match.homeTeamGoals) totalPoints += 3;
       if (match.homeTeamGoals === match.awayTeamGoals) totalPoints += 1;
       return totalPoints;
@@ -22,7 +15,7 @@ export default class LeaderboardUtils {
   static totalGames(id: number, matches: IMatch[]): number {
     let totalGames = 0;
     matches.map((match) => {
-      if (match.homeTeamId === id || match.awayTeamId === id) totalGames += 1;
+      if (match.awayTeamId === id) totalGames += 1;
       return totalGames;
     });
     return totalGames;
@@ -30,14 +23,8 @@ export default class LeaderboardUtils {
 
   static totalVictories(id: number, matches: IMatch[]): number {
     let totalVictories = 0;
-    const teamMatches = matches.filter(
-      (match) => match.homeTeamId === id || match.awayTeamId === id,
-    );
+    const teamMatches = matches.filter((match) => match.awayTeamId === id);
     teamMatches.map((match) => {
-      if (match.homeTeamId === id) {
-        if (match.homeTeamGoals > match.awayTeamGoals) totalVictories += 1;
-        return totalVictories;
-      }
       if (match.awayTeamGoals > match.homeTeamGoals) totalVictories += 1;
       return totalVictories;
     });
@@ -46,9 +33,7 @@ export default class LeaderboardUtils {
 
   static totalDraws(id: number, matches: IMatch[]): number {
     let totalDraws = 0;
-    const teamMatches = matches.filter(
-      (match) => match.homeTeamId === id || match.awayTeamId === id,
-    );
+    const teamMatches = matches.filter((match) => match.awayTeamId === id);
     teamMatches.map((match) => {
       if (match.awayTeamGoals === match.homeTeamGoals) totalDraws += 1;
       return totalDraws;
@@ -58,14 +43,8 @@ export default class LeaderboardUtils {
 
   static totalLosses(id: number, matches: IMatch[]): number {
     let totalLosses = 0;
-    const teamMatches = matches.filter(
-      (match) => match.homeTeamId === id || match.awayTeamId === id,
-    );
+    const teamMatches = matches.filter((match) => match.awayTeamId === id);
     teamMatches.map((match) => {
-      if (match.homeTeamId === id) {
-        if (match.homeTeamGoals < match.awayTeamGoals) totalLosses += 1;
-        return totalLosses;
-      }
       if (match.awayTeamGoals < match.homeTeamGoals) totalLosses += 1;
       return totalLosses;
     });
@@ -74,14 +53,8 @@ export default class LeaderboardUtils {
 
   static goalsFavor(id: number, matches: IMatch[]): number {
     let goalsFavor = 0;
-    const teamMatches = matches.filter(
-      (match) => match.homeTeamId === id || match.awayTeamId === id,
-    );
+    const teamMatches = matches.filter((match) => match.awayTeamId === id);
     teamMatches.map((match) => {
-      if (match.homeTeamId === id) {
-        goalsFavor += match.homeTeamGoals;
-        return goalsFavor;
-      }
       goalsFavor += match.awayTeamGoals;
       return goalsFavor;
     });
@@ -90,14 +63,8 @@ export default class LeaderboardUtils {
 
   static goalsOwn(id: number, matches: IMatch[]): number {
     let goalsOwn = 0;
-    const teamMatches = matches.filter(
-      (match) => match.homeTeamId === id || match.awayTeamId === id,
-    );
+    const teamMatches = matches.filter((match) => match.awayTeamId === id);
     teamMatches.map((match) => {
-      if (match.homeTeamId === id) {
-        goalsOwn += match.awayTeamGoals;
-        return goalsOwn;
-      }
       goalsOwn += match.homeTeamGoals;
       return goalsOwn;
     });
