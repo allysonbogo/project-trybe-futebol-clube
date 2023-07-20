@@ -32,57 +32,23 @@ export default class LeaderboardModel {
     );
   }
 
-  async leaderboard(): Promise<ILeaderboard[]> {
+  async leaderboard(param: string): Promise<ILeaderboard[]> {
     const allTeams = await this.findAllTeams();
     const allMatches = await this.findAllFinished();
 
-    return allTeams.map((team) => ({
-      name: team.teamName,
-      totalPoints: LeaderboardUtils.totalPoints(team.id, allMatches),
-      totalGames: LeaderboardUtils.totalGames(team.id, allMatches),
-      totalVictories: LeaderboardUtils.totalVictories(team.id, allMatches),
-      totalDraws: LeaderboardUtils.totalDraws(team.id, allMatches),
-      totalLosses: LeaderboardUtils.totalLosses(team.id, allMatches),
-      goalsFavor: LeaderboardUtils.goalsFavor(team.id, allMatches),
-      goalsOwn: LeaderboardUtils.goalsOwn(team.id, allMatches),
-      goalsBalance: LeaderboardUtils.goalsBalance(team.id, allMatches),
-      efficiency: LeaderboardUtils.efficiency(team.id, allMatches),
-    }));
-  }
-
-  async homeLeaderboard(): Promise<ILeaderboard[]> {
-    const allTeams = await this.findAllTeams();
-    const allMatches = await this.findAllFinished();
-
-    return allTeams.map((team) => ({
-      name: team.teamName,
-      totalPoints: HomeLeaderboardUtils.totalPoints(team.id, allMatches),
-      totalGames: HomeLeaderboardUtils.totalGames(team.id, allMatches),
-      totalVictories: HomeLeaderboardUtils.totalVictories(team.id, allMatches),
-      totalDraws: HomeLeaderboardUtils.totalDraws(team.id, allMatches),
-      totalLosses: HomeLeaderboardUtils.totalLosses(team.id, allMatches),
-      goalsFavor: HomeLeaderboardUtils.goalsFavor(team.id, allMatches),
-      goalsOwn: HomeLeaderboardUtils.goalsOwn(team.id, allMatches),
-      goalsBalance: HomeLeaderboardUtils.goalsBalance(team.id, allMatches),
-      efficiency: HomeLeaderboardUtils.efficiency(team.id, allMatches),
-    }));
-  }
-
-  async awayLeaderboard(): Promise<ILeaderboard[]> {
-    const allTeams = await this.findAllTeams();
-    const allMatches = await this.findAllFinished();
-
-    return allTeams.map((team) => ({
-      name: team.teamName,
-      totalPoints: AwayLeaderboardUtils.totalPoints(team.id, allMatches),
-      totalGames: AwayLeaderboardUtils.totalGames(team.id, allMatches),
-      totalVictories: AwayLeaderboardUtils.totalVictories(team.id, allMatches),
-      totalDraws: AwayLeaderboardUtils.totalDraws(team.id, allMatches),
-      totalLosses: AwayLeaderboardUtils.totalLosses(team.id, allMatches),
-      goalsFavor: AwayLeaderboardUtils.goalsFavor(team.id, allMatches),
-      goalsOwn: AwayLeaderboardUtils.goalsOwn(team.id, allMatches),
-      goalsBalance: AwayLeaderboardUtils.goalsBalance(team.id, allMatches),
-      efficiency: AwayLeaderboardUtils.efficiency(team.id, allMatches),
-    }));
+    switch (param) {
+      case 'home': return allTeams.map((team) => ({
+        name: team.teamName,
+        ...HomeLeaderboardUtils.infostatistics(team.id, allMatches),
+      }));
+      case 'away': return allTeams.map((team) => ({
+        name: team.teamName,
+        ...AwayLeaderboardUtils.infostatistics(team.id, allMatches),
+      }));
+      default: return allTeams.map((team) => ({
+        name: team.teamName,
+        ...LeaderboardUtils.infostatistics(team.id, allMatches),
+      }));
+    }
   }
 }

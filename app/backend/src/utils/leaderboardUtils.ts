@@ -1,3 +1,4 @@
+import { ILeaderboard } from '../Interfaces/Leaderboard/ILeaderboard';
 import { IMatch } from '../Interfaces/Matches/IMatch';
 
 export default class LeaderboardUtils {
@@ -112,5 +113,19 @@ export default class LeaderboardUtils {
   static efficiency(id: number, matches: IMatch[]): number {
     const efficiency = (this.totalPoints(id, matches) / (this.totalGames(id, matches) * 3)) * 100;
     return Number(efficiency.toFixed(2));
+  }
+
+  static infostatistics(id: number, matches: IMatch[]): ILeaderboard {
+    return {
+      totalPoints: this.totalPoints(id, matches),
+      totalGames: this.totalGames(id, matches),
+      totalVictories: this.totalVictories(id, matches),
+      totalDraws: this.totalDraws(id, matches),
+      totalLosses: this.totalLosses(id, matches),
+      goalsFavor: this.goalsFavor(id, matches),
+      goalsOwn: this.goalsOwn(id, matches),
+      goalsBalance: this.goalsBalance(id, matches),
+      efficiency: this.efficiency(id, matches),
+    };
   }
 }

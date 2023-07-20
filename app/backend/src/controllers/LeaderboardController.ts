@@ -7,17 +7,17 @@ export default class LeaderboardController {
   ) { }
 
   public async leaderboard(req: Request, res: Response) {
-    const serviceResponse = await this.leaderboardService.leaderboard();
+    const serviceResponse = await this.leaderboardService.leaderboard('general');
     return res.status(200).json(serviceResponse.data);
   }
 
   public async homeLeaderboard(req: Request, res: Response) {
-    const serviceResponse = await this.leaderboardService.homeLeaderboard();
+    const serviceResponse = await this.leaderboardService.leaderboard('home');
     return res.status(200).json(serviceResponse.data);
   }
 
   public async awayLeaderboard(req: Request, res: Response) {
-    const serviceResponse = await this.leaderboardService.awayLeaderboard();
+    const serviceResponse = await this.leaderboardService.leaderboard('away');
     return res.status(200).json(serviceResponse.data);
   }
 }
