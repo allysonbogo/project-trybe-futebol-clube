@@ -7,6 +7,15 @@ export default class LeaderboardService {
     private leaderboardModel = new LeaderboardModel(),
   ) { }
 
+  public async leaderboard(): Promise<ServiceResponse<ILeaderboard[]>> {
+    const allTeamsInfo = (await this.leaderboardModel.leaderboard())
+      .sort((p1, p2) => p2.goalsFavor - p1.goalsFavor)
+      .sort((p1, p2) => p2.goalsBalance - p1.goalsBalance)
+      .sort((p1, p2) => p2.totalVictories - p1.totalVictories)
+      .sort((p1, p2) => p2.totalPoints - p1.totalPoints);
+    return { status: 'SUCCESSFUL', data: allTeamsInfo };
+  }
+
   public async homeLeaderboard(): Promise<ServiceResponse<ILeaderboard[]>> {
     const allTeamsInfo = (await this.leaderboardModel.homeLeaderboard())
       .sort((p1, p2) => p2.goalsFavor - p1.goalsFavor)
