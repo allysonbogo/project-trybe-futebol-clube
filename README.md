@@ -3,9 +3,9 @@
 
 ## :page_with_curl: Sobre
 
-O Trybe Futebol Clube (TFC) é um projeto de desenvolvimento de uma API RESTful para um site informativo de partidas e classificações de times de futebol. Como parte da proposta, construí uma API usando a metodologia Test-Driven Development (TDD) e a integração de aplicativos com docker-compose, garantindo uma operação rápida, consistente e conectada ao banco de dados.
+O Trybe Futebol Clube (TFC) é um projeto de desenvolvimento de uma API RESTful para um site informativo de partidas e classificações de times de futebol. Como parte da proposta, foi construída uma API usando a metodologia Test-Driven Development (TDD) e a integração de aplicativos com docker-compose, garantindo uma operação rápida, consistente e conectada ao banco de dados.
 
-O objetivo principal foi criar um back-end dockerizado com modelagem de dados utilizando TypeScript, MySQL e Sequelize, seguindo rigorosamente as regras de negócio estabelecidas e deixando a API pronta para ser consumida pelo front-end já existente. Foram estabelecidos relacionamentos entre as tabelas "teams" e "matches" para atualizações simultâneas das tabelas de partidas e classificações. Para adicionar uma partida é necessário ter um token de autenticação, garantindo que apenas usuários logados possam fazer alterações. 
+O objetivo principal foi criar um back-end dockerizado com modelagem de dados utilizando TypeScript, MySQL e Sequelize, seguindo rigorosamente as regras de negócio estabelecidas e deixando a API pronta para ser consumida pelo front-end já existente. Foram estabelecidos relacionamentos entre as tabelas "teams" e "matches" para atualizações simultâneas das tabelas de partidas e classificações.
 
 
 ## 🛠️ Ferramentas Utilizadas
@@ -76,22 +76,20 @@ npm run test:coverage
   <details>
     <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
 
-    ```
     {
       "email": "string",
       "password": "string"
     }
-    ```
+  
   </details>
 
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     {
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
     }
-    ```
+
   > :warning: &nbsp; _O token acima é fictício, o token verdadeiro é gerado a partir da ferramenta JWT (JSON Web Token), utilizando uma palavra-passe e um payload secretos_
   </details>
 
@@ -109,9 +107,8 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     { "role": "admin" }
-    ```
+
   </details>
   <br>
 </details>
@@ -145,7 +142,6 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     [
       {
         "id": 1,
@@ -153,7 +149,7 @@ npm run test:coverage
       },
       ...
     ]
-    ```
+
   </details>
   <br>
 
@@ -164,12 +160,11 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     {
       "id": 4,
       "teamName": "Charmander"
     }
-    ```
+
   </details>
 
   <details>
@@ -193,7 +188,6 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     [
       {
         "id": 1,
@@ -226,7 +220,7 @@ npm run test:coverage
       }
       ...
     ]
-    ```
+
   </details>
   <br>
 
@@ -237,7 +231,6 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     [
       {
         "id": 41,
@@ -255,7 +248,7 @@ npm run test:coverage
       },
       ...
     ]
-    ```
+
   </details>
   <br>
 
@@ -267,7 +260,6 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     [
       {
         "id": 1,
@@ -285,7 +277,7 @@ npm run test:coverage
       },
       ...
     ]
-    ```
+
   </details>
   <br>
 
@@ -296,9 +288,8 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     { "message": "Finished" }
-    ```
+
   </details>
   <br>
 
@@ -309,18 +300,16 @@ npm run test:coverage
   <details>
     <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
     
-    ```
     {
       "homeTeamGoals": 3,
       "awayTeamGoals": 1
     }
-    ```
+
   </details>
 
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     {
       "id": 1,
       "homeTeamId": 16,
@@ -335,7 +324,7 @@ npm run test:coverage
         "teamName": "Grêmio"
       }
     }
-    ```
+
   </details>
   <br>
 
@@ -346,20 +335,18 @@ npm run test:coverage
   <details>
     <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
 
-    ```
     {
       "homeTeamId": 16,
       "awayTeamId": 8,
       "homeTeamGoals": 2,
       "awayTeamGoals": 2,
     }
-    ```
+
   </details>
 
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 201</code>: </summary>
 
-    ```
     {
       "id": 1,
       "homeTeamId": 16,
@@ -368,7 +355,7 @@ npm run test:coverage
       "awayTeamGoals": 2,
       "inProgress": true,
     }
-    ```
+
   </details>
 
   <details>
@@ -393,7 +380,6 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     [
       {
         "name": "Santos",
@@ -421,7 +407,7 @@ npm run test:coverage
       },
       ...
     ]
-    ```
+
   </details>
   <br>
 
@@ -432,7 +418,6 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     [
       {
         "name": "Palmeiras",
@@ -460,7 +445,7 @@ npm run test:coverage
       },
       ...
     ]
-    ```
+
   </details>
   <br>
 
@@ -471,7 +456,6 @@ npm run test:coverage
   <details>
     <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
     
-    ```
     [
       {
         "name": "Palmeiras",
@@ -499,7 +483,7 @@ npm run test:coverage
       },
       ...
     ]
-    ```
+
   </details>
   <br>
 </details>
